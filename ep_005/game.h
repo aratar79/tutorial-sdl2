@@ -17,6 +17,8 @@ private:
     bool m_running;
     Imagen* m_hola;
 
+    float img_x, img_y, img_vx, img_vy;
+
     void Input();
     void HandleEvent();
     void Update();
@@ -24,3 +26,4 @@ private:
 };
 
 #endif // _GAME_H_
+
