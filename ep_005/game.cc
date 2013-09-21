@@ -12,6 +12,8 @@ Game::Game(const char* title, int width, int height)
     m_running = false;
     img_x = img_y = 50.0;
     img_vx = img_vy = 0.0;
+
+    m_keys = SDL_GetKeyboardState(NULL);
 }
 
 Game::~Game()
@@ -42,52 +44,32 @@ void Game::Input()
 
 void Game::HandleEvent()
 {
-	SDL_Scancode sc;
-	SDL_Keycode kc;
     switch(m_evento.type)
     {
     case SDL_QUIT:
         m_running = false;
         break;
-	case SDL_KEYDOWN:
-		sc = m_evento.key.keysym.scancode;
-		switch(sc)
-		{
-		case SDL_SCANCODE_UP:
-			img_vy = -1.0;
-			break;
-		case SDL_SCANCODE_DOWN:
-		    img_vy = 1.0;
-		    break;
-	    default:
-	        break;
-		}
-
-		switch(sc)
-		{
-		case SDL_SCANCODE_LEFT:
-			img_vx = -1.0;
-			break;
-		case SDL_SCANCODE_RIGHT:
-		    img_vx = 1.0;
-		    break;
-	    default:
-	        break;
-		}
-
-        break;
-	case SDL_KEYUP:
-	    sc = m_evento.key.keysym.scancode;
-	    if(sc == SDL_SCANCODE_UP || sc == SDL_SCANCODE_DOWN)
-	        img_vy = 0.0;
-	    if(sc == SDL_SCANCODE_LEFT || sc == SDL_SCANCODE_RIGHT)
-	        img_vx = 0.0;
-	    break;
     }
 }
 
 void Game::Update()
 {
+    if(m_keys[SDL_SCANCODE_UP]) {
+        img_vy = -1;
+    } else if(m_keys[SDL_SCANCODE_DOWN]) {
+        img_vy = 1;
+    } else {
+        img_vy = 0;
+    }
+
+    if(m_keys[SDL_SCANCODE_LEFT]) {
+        img_vx = -1;
+    } else if(m_keys[SDL_SCANCODE_RIGHT]) {
+        img_vx = 1;
+    } else {
+        img_vx = 0;
+    }
+
     img_x += img_vx;
     img_y += img_vy;
 }
@@ -98,4 +80,3 @@ void Game::Render()
     m_hola->Render((int) img_x, (int) img_y);
     SDL_RenderPresent(m_renderer);
 }
-

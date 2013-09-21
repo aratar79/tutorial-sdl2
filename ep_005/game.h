@@ -19,6 +19,8 @@ private:
 
     float img_x, img_y, img_vx, img_vy;
 
+    const Uint8* m_keys;
+
     void Input();
     void HandleEvent();
     void Update();
@@ -26,4 +28,3 @@ private:
 };
 
 #endif // _GAME_H_
-
